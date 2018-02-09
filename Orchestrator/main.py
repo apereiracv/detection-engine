@@ -72,7 +72,8 @@ def main(args, rootDir):
         try:
             logger.error(e, traceback.format_exc())
         except Exception as e1:
-            print('Exception: ', e1, traceback.format_exc())
+            print('Exception1:', e,  traceback.format_exc())
+            print('Exception2: ', e1, traceback.format_exc())
 
 
 
