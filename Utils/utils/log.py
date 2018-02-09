@@ -44,7 +44,7 @@ class Logging(object):
 
             consoleHandler = logging.StreamHandler()
             consoleHandler.setFormatter(formatter)
-
+            print(directory)
             fileHandler = logging.FileHandler(os.path.join(directory, self.LOGS[logKey]['name']), mode='a')
             fileHandler.setFormatter(formatter)
 
