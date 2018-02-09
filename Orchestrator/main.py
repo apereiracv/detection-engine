@@ -55,7 +55,9 @@ def main(args, rootDir):
 
         # Do job
         if command == 'train':
+            print("Entered train")
             logger = utils.log.Logging(['info'], context)
+            print("no luck")
             orchest = orchestrator.Orchestrator(logger)
             orchest.train(context)
 
