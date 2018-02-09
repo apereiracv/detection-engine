@@ -43,7 +43,7 @@ def main(args, rootDir):
         # Load context / configuration
         configPath = args.get('config')
         dataPath = args.get('p')
-
+        print(configPath)
         if not os.path.isabs(configPath):
             configPath = os.path.join(rootDir, configPath)
 
