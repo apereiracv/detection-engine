@@ -10,6 +10,7 @@ import pickle
 import math
 import ntpath
 import utils.drawing
+import ast
 
 import entities.image
 
@@ -552,7 +553,7 @@ class OptimizedImagePreprocessor(object):
         classifier_min_overlap = float(context.getConfig('NeuralNetwork', 'classifier_min_overlap'))
         classifier_max_overlap = float(context.getConfig('NeuralNetwork', 'classifier_max_overlap'))
         classifier_regr_std = json.loads(context.getConfig('Preprocessing', 'classifier_regr_std'))
-        class_mapping = json.loads(context.getConfig('Training', 'class_mapping').replace("\'", '"'))
+        class_mapping = ast.literal_eval(context.getConfig('Training', 'class_mapping'))
 
         bboxes = image.boundingBoxes
         num_bboxes = len(bboxes)

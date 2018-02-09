@@ -7,6 +7,7 @@ import copy
 import traceback
 import os
 import pickle
+import ast
 
 import entities.image
 
@@ -615,7 +616,7 @@ class ImagePreprocessor(object):
         # Get context config
         suppresion_overlap = float(context.getConfig('NeuralNetwork', 'suppresion_overlap'))
         max_boxes = int(context.getConfig('NeuralNetwork', 'max_boxes'))
-        class_mapping = json.loads(context.getConfig('Training', 'class_mapping').replace("\'", '"'))
+        class_mapping = ast.literal_eval(context.getConfig('Training', 'class_mapping'))
         rpn_stride = int(context.getConfig('NeuralNetwork', 'rpn_stride'))
         classifier_min_overlap = float(context.getConfig('NeuralNetwork', 'classifier_min_overlap'))
         classifier_max_overlap = float(context.getConfig('NeuralNetwork', 'classifier_max_overlap'))

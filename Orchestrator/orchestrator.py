@@ -7,6 +7,7 @@ import traceback
 import inspect
 import json
 import pickle
+import ast
 
 import entities
 import parsers.jsonparser
@@ -161,7 +162,7 @@ class Orchestrator(object):
         try:
             self.logger.info('Starting detection')
             numROIs = int(context.getConfig('NeuralNetwork', 'num_rois'))
-            classMapping = json.loads(context.getConfig('Training', 'class_mapping').replace("\'", '"'))
+            classMapping = ast.literal_eval(context.getConfig('Training', 'class_mapping'))
             classMapping = {v: k for k, v in classMapping.items()}
             classifier_regr_std = json.loads(context.getConfig('Preprocessing', 'classifier_regr_std'))
             rpn_stride = int(context.getConfig('NeuralNetwork', 'rpn_stride'))
