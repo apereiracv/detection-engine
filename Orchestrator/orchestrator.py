@@ -87,7 +87,7 @@ class Orchestrator(object):
                     ROIs, ROIclassification, ROIregression = preprocessor.nonMaxSuppressionWithIOU(trainingImage, regions, probs, context)
                     self.logger.info('IOU regions: {}'.format(ROIs.shape))
 
-                    utils.drawing.ImageDrawer().drawRegionsOnImageWH(trainingImage, ROIs, context, ROIclassification, str(epoch))
+                    #utils.drawing.ImageDrawer().drawRegionsOnImageWH(trainingImage, ROIs, context, ROIclassification, str(epoch))
 
                     # If no ROIs where calculated, continue
                     if ROIs is None:
