@@ -48,7 +48,7 @@ def main(args, rootDir):
         print(configPath)
         context = entities.context.Context(configPath)
         context.dataPath = dataPath
-
+        print(configPath)
         setContextParameters(context, rootDir)
         
         command = args.get('c')
