@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+*.pyc
+*.log
+*.h5
+*.pickle
+*.hdf5
+*.suo
+*.pickle
+*.jpg
+*.png
+*.jpeg

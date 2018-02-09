@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NeuralNetwork", "DetectionEngine\NeuralNetwork.pyproj", "{EF01B531-98D0-43D2-9AF9-88E6B5C917C1}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Utilities", "Utils\Utilities.pyproj", "{6A5C0684-0E8C-4166-A03C-825B21FA7227}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Orchestrator", "Orchestrator\Orchestrator.pyproj", "{5BD2CF65-D213-49D8-89A3-4AD7F19AF06D}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Data", "Data\Data.pyproj", "{511B9C30-B891-4DC1-96BB-DA0908266DF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF01B531-98D0-43D2-9AF9-88E6B5C917C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF01B531-98D0-43D2-9AF9-88E6B5C917C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A5C0684-0E8C-4166-A03C-825B21FA7227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A5C0684-0E8C-4166-A03C-825B21FA7227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BD2CF65-D213-49D8-89A3-4AD7F19AF06D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BD2CF65-D213-49D8-89A3-4AD7F19AF06D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{511B9C30-B891-4DC1-96BB-DA0908266DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{511B9C30-B891-4DC1-96BB-DA0908266DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
