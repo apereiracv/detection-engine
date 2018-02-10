@@ -732,8 +732,8 @@ class OptimizedImagePreprocessor(object):
             # get the GT box coordinates, and resize to account for image resizing
             # TODO: Check, is width and height correct?
             gta[bbox_num, 0] = bbox['x1'] * (image.resizedWidth / float(image.width) / rpn_stride)
-            gta[bbox_num, 1] = bbox['y1'] * (image.resizedWidth / float(image.width) / rpn_stride)
-            gta[bbox_num, 2] = bbox['x2'] * (image.resizedHeight / float(image.height) / rpn_stride)
+            gta[bbox_num, 1] = bbox['y1'] * (image.resizedHeight / float(image.height) / rpn_stride)
+            gta[bbox_num, 2] = bbox['x2'] * (image.resizedWidth / float(image.width) / rpn_stride)
             gta[bbox_num, 3] = bbox['y2'] * (image.resizedHeight / float(image.height) / rpn_stride)
 
         return gta
