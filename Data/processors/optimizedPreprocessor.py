@@ -238,7 +238,7 @@ class OptimizedImagePreprocessor(object):
                     self.logger.error(e, traceback.format_exc())
                     continue
        
-     
+     # -------------- Creating region files takes much space, disabling for now
     def getRegions(self, image, context):
         # Region file name according to generated regions settings ex: surface_top_s16_r2
         stride = context.getConfig('NeuralNetwork', 'rpn_stride')
@@ -265,7 +265,8 @@ class OptimizedImagePreprocessor(object):
             self.logger.info('Calculating regions')
             y_rpn_cls, y_rpn_regr = self.calculateRPN(image, context)   
             regions = [y_rpn_cls, y_rpn_regr]
-            pickle.dump(regions, open(imageRegionFile, "wb"))
+            # -------------- Creating region files takes much space, disabling for now--------------------------
+            #pickle.dump(regions, open(imageRegionFile, "wb"))
 
         return y_rpn_cls, y_rpn_regr
 
@@ -365,7 +366,7 @@ class OptimizedImagePreprocessor(object):
         # Activate negative regions
         y_is_box_valid[valid_regions[np.unique(neg_overlaps)]] = 1
 
-        del tx,ty, tw, th
+        del tx, ty, tw, th
         del pos_overlaps_bbox, pos_overlaps_max, neg_overlaps
 
         # Reshape to contine calculations
@@ -594,7 +595,6 @@ class OptimizedImagePreprocessor(object):
 
         final_overlaps = self.calculateArrayIOU(suppresed_boxes, gta)
         pos_overlaps = np.where(final_overlaps >= classifier_max_overlap)
-        # TODO: Check why some boxes neg are also pos
 
         pos_boxes = suppresed_boxes[pos_overlaps[1]]
 

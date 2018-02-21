@@ -21,12 +21,12 @@ def setContextParameters(context, rootDir):
     if args.get('num-epochs'): 
         context.configuration.set('NeuralNetwork', 'num_epochs', args.get('num-epochs'))
 
-    if args.get('i'):
+    if args.get('w'):
         if not os.path.isabs('w'):
             abspath = os.path.join(rootDir, args.get('w'))
         else:
             abspath = args.get('w')
-            context.configuration.set('NeuralNetwork', 'weigths_path', abspath)
+        context.configuration.set('NeuralNetwork', 'weights_path', abspath)
 
     if args.get('o'):
         if not os.path.isabs('o'):
@@ -43,21 +43,20 @@ def main(args, rootDir):
         # Load context / configuration
         configPath = args.get('config')
         dataPath = args.get('p')
+
         if not os.path.isabs(configPath):
             configPath = os.path.join(rootDir, configPath)
-        print(configPath)
+
         context = entities.context.Context(configPath)
         context.dataPath = dataPath
-        print(configPath)
+
         setContextParameters(context, rootDir)
         
         command = args.get('c')
 
         # Do job
         if command == 'train':
-            print("Entered train")
             logger = utils.log.Logging(['info'], context)
-            print("no luck")
             orchest = orchestrator.Orchestrator(logger)
             orchest.train(context)
 
@@ -87,8 +86,8 @@ if __name__ == '__main__':
     
     parser.add_argument('-p', type=str, help='Path to train annotations or test image\n', required=True)
     parser.add_argument('-config', type=str, help='Path to test/training configuration file\n', default=os.path.join(rootDir,'configuration.cfg'))
-    parser.add_argument('-w', type=str, help='Path to pre-trained model weights\n', default=os.path.join(rootDir, 'weights.h5'))
-    parser.add_argument('-o', type=str, help='Output file for trained model\n', default=os.path.join(rootDir, 'model.hdf5'))
+    parser.add_argument('-w', type=str, help='Path to pre-trained model weights\n')
+    parser.add_argument('-o', type=str, help='Output file for trained model\n')
 
     parser.add_argument('-num-rois', type=int, help='Number of simultaneous ROIs to process in classifier\n')
     parser.add_argument('-num-epochs', type=int, help='Number of full train iterations to perform\n')

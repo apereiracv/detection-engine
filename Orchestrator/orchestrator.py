@@ -8,6 +8,7 @@ import inspect
 import json
 import pickle
 import ast
+import jsonpickle
 
 import entities
 import parsers.jsonparser
@@ -167,7 +168,7 @@ class Orchestrator(object):
             classifier_regr_std = json.loads(context.getConfig('Preprocessing', 'classifier_regr_std'))
             rpn_stride = int(context.getConfig('NeuralNetwork', 'rpn_stride'))
             resize_factor = float(context.getConfig('Preprocessing', 'resize_factor'))
-            suppresion_overlap = float(context.getConfig('NeuralNetwork', 'detect_suppresion_overlap'))
+            detect_suppresion_overlap = float(context.getConfig('NeuralNetwork', 'detect_suppresion_overlap'))
             classifier_threshold = float(context.getConfig('NeuralNetwork', 'detect_classifier_threshold'))
             context.classCount = classMapping
             #Initialize loss class for calculations
@@ -183,7 +184,6 @@ class Orchestrator(object):
 
 
             self.logger.info('Classes" {}'.format(classMapping))
-            #numROIs = int(context.getConfig('NeuralNetwork', 'num_rois'))
             image = preprocessor.loadImage(context.dataPath, context)
 
             # Process image regions
@@ -198,7 +198,7 @@ class Orchestrator(object):
 
             # Convert from (x1,y1,x2,y2) to (x,y,w,h)
             regions[:, 2] -= regions[:, 0] # w = x2 - x1
-            regions[:, 3] -= regions[:, 1] # w = y2 - y1
+            regions[:, 3] -= regions[:, 1] # h = y2 - y1
 
             detectedBoxes = {}
             detectedProbs = {}
@@ -255,13 +255,13 @@ class Orchestrator(object):
                     detectedBoxes[cls_name].append([roi_x1, roi_y1, roi_x2, roi_y2])
                     detectedProbs[cls_name].append(np.max(P_cls[0, ii, :]))
 
-            finalBoxes = {}
-            finalProbs = {}
+            finalResults = {}
+            colors = {'201R': (0,255,1), '201C': (0,0,255)}
             for key in detectedBoxes:
                 bbox = np.array(detectedBoxes[key])
                 probs = np.array(detectedProbs[key])
                 print('Suppressing')
-                #new_boxes, new_probs = preprocessor.nonMaxSuppression(bbox, probs, context, overlap=suppresion_overlap)
+                #new_boxes, new_probs = preprocessor.nonMaxSuppression(bbox, probs, context, overlap=detect_suppresion_overlap)
                 new_boxes, new_probs = preprocessor.nonMaxSuppressionEuclidean(bbox, probs, context)
                 
                 x1 = np.expand_dims(np.round(new_boxes[:,0] / resize_factor).astype(np.int),axis=1)
@@ -273,20 +273,23 @@ class Orchestrator(object):
 
                 # Draw result
                 for box in boxes:
-                    cv2.rectangle(image.imageData,(box[0], box[1]), (box[2], box[3]), (0,255,0), 1)
+                    cv2.rectangle(image.imageData,(box[0], box[1]), (box[2], box[3]), colors[key], 1)
 
                 finalResults[key] = []
                 for i in range(len(boxes)):
-                    detection = {'coords': boxes[i], 'prob': new_probs[i] }
+                    detection = {'coords': boxes[i], 'prob': float(new_probs[i]) }
                     finalResults[key].append(detection)
 
             # Save results
-            resultFile = 'result_' + image.id + '.pickle'
+            resultFile = 'result_' + image.id + '.json'
             resultImage = 'result_' + image.id + '.' + image.ext
             cv2.imshow('img', image.imageData)
             cv2.waitKey(0)
             cv2.imwrite(resultImage, image.imageData)
-            pickle.dump(finalResults, open(resultFile, 'wb'))
+            with open(resultFile, 'w') as resultF:
+                json.dump(finalResults, resultF)
+
+            
 
         except Exception as e:
             self.logger.error(e, traceback.format_exc())
